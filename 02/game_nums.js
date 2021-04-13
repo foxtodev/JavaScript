@@ -3,7 +3,7 @@ window.onload = function() {
     var rnd_num, n, count;
 
     while (!end_game) {
-        rnd_num = Math.floor(Math.random() * 8999 + 1000);
+        rnd_num = Math.floor(Math.random() * 9000 + 1000);
         count = 0;
         console.log(rnd_num);
         n = prompt("Четырехзначное число загаданно! Ваш ход:");

@@ -1,3 +1,7 @@
+#### Практикум. Угадай число
+
+index.html game_nums.js
+
 #### 1. Почему код дает именно такие результаты?
 
 ```javascript
@@ -100,13 +104,13 @@ console.log("div => " + mathOperation(a, b, "div").toFixed(3));
 #### 7. Сравнить null и 0. Объяснить результат.
 
 ```javascript
-console.log( "0 == null\t" + (0 == null)); //false
+console.log( "0 == null\t" + (0 == null));  //false
 // 0    - значение
 // null - не является значением
 //        Это «заполнитель» для значения данных, которое неизвестно или не указано
-console.log( "0 > null\t" + (0 > null));
-console.log( "0 < null\t" + (0 < null));
-console.log( "0 >= null\t" + (0 >= null) + "\t:)))))"); // :)))))
+console.log( "0 > null\t" + (0 > null));    //false
+console.log( "0 < null\t" + (0 < null));    //false
+console.log( "0 >= null\t" + (0 >= null) + "\t:)))))"); // true :)))))
 ```
 
 #### 8. С помощью рекурсии организовать функцию возведения числа в степень. Формат: function power(val, pow), где val — заданное число, pow –— степень.

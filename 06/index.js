@@ -29,13 +29,21 @@ function getQuantity(arr) {
 
 function renderBasket() {
     $basket.textContent = '';
-    const p = document.createElement('p');
+    const h = document.createElement('h4');
     if(basket.length !== 0) {
-        p.textContent = `в корзине ${getQuantity(basket)} товаров, на сумму  ${getPrice(basket)} рублей`;
+        basket.forEach(function(basket, i){
+        const html = `
+        <div>            
+            <h4>${basket.name} / Количество ${basket.quantity} / Цена ${basket.price.toLocaleString()} &#8381;</h4>
+            <!-- <button data-id="${i}" class="remove">-</button> -->
+        </div>`;
+        $basket.insertAdjacentHTML('beforeend', html);
+        });
+        h.textContent = `в корзине ${getQuantity(basket)} товаров, на сумму  ${getPrice(basket)} рублей`;
     } else {
-        p.textContent = 'корзина пуста'
+        h.textContent = 'корзина пуста'
     }
-     $basket.appendChild(p);
+     $basket.appendChild(h);
 }
 
 function renderProducts() {

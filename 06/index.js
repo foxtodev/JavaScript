@@ -43,8 +43,7 @@ function renderProducts() {
         const imagesHtml = product.images.map(function(src, index) {
             return `<img data-id="${i}" data-img="${index}" src="${src}" class="photo-product" />`
         }).join('');
-
-        console.log(imagesHtml);
+        
         const html = `
         <div class="product">
             <h3>${product.name}</h3>
@@ -79,17 +78,33 @@ $productsList.addEventListener('click', function(e) {
         const product_id = Number(e.target.getAttribute('data-id'));
         const img_id = Number(e.target.getAttribute('data-img'));
         $popup.textContent = '';
-        $popup.style.display = 'block';
+        $popup.style.display = 'flex';
         $popup.insertAdjacentHTML('beforeend', `
-            <div class="gallery">
-                <div id="img-prev" onClick="ImgPrev();"><</div>
-                <div id="product-img"><img src="${products[product_id].images[img_id]}"></div>
-                <div id="img-next" onClick="ImgNext();">></div>
-            </div>
+            <div id="img-prev"><img id="img-prev" width="50px" src="img/previous.svg"></div>
+            <div id="product-img"><img class="zoom-img" data-id="${product_id}" data-img="${img_id}" src="${products[product_id].images[img_id]}"></div>
+            <div id="img-next"><img id="img-next" width="50px" src="img/next.svg"> </div>
             <div id="popup-back" onClick="ClosePopup();"></div>
         `);
     }
 });
+
+$popup.addEventListener('click', function(e) {
+    if( e.target.id === 'img-next' ) {
+        const product_id = Number($popup.querySelector('.zoom-img').getAttribute('data-id'));
+        let img_id = Number($popup.querySelector('.zoom-img').getAttribute('data-img')) + 1;
+        if(img_id == products[product_id].images.length) img_id = 0;
+        $popup.querySelector('.zoom-img').setAttribute('data-img', img_id);
+        $popup.querySelector('.zoom-img').src = products[product_id].images[img_id];
+    }
+    if( e.target.id === 'img-prev' ) {
+        const product_id = Number($popup.querySelector('.zoom-img').getAttribute('data-id'));
+        let img_id = Number($popup.querySelector('.zoom-img').getAttribute('data-img')) - 1;
+        if(img_id == -1) img_id = products[product_id].images.length - 1;
+        $popup.querySelector('.zoom-img').setAttribute('data-img', img_id);
+        $popup.querySelector('.zoom-img').src = products[product_id].images[img_id];
+    }
+});
+
 
 document.addEventListener('keydown', function(e) {
     if(e.key === 'Escape') ClosePopup();

@@ -1,0 +1,119 @@
+body {
+    margin: 20px;
+    background: #f8f8f8;
+    font-family: Calibri;
+}
+
+.container {
+    width: 60%;
+    margin: 0 auto;
+}
+
+#gallery {
+    text-align: center;
+    margin: 10px;
+    padding: 30px;
+}
+
+#gallery .thumb {
+    display: inline-block;
+    background: #fff;
+    margin: 5px;
+}
+
+#gallery .thumb img {
+    width: 200px;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.zoom {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /*display: inline-block;*/
+    position: absolute;
+    outline: 1px solid #9c9c9c;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, .9);
+    background-image: url(img/zoom-in.svg);
+    background-position: center center;
+    background-repeat: no-repeat no-repeat;
+    background-size: 80px 80px;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    transition: opacity 1s;
+    cursor: pointer;
+}
+
+.zoom:hover {
+    opacity: 1;
+}
+
+#popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+    display: none;
+    justify-content: center;
+}
+
+#img-prev, #img-next {
+    width: 50px;
+    cursor: pointer;
+    opacity: .7;
+    margin: auto 0;
+
+}
+
+#img-prev:hover, #img-next:hover {
+    opacity: 1;
+}
+
+#close {
+    position: absolute;
+    top: calc(50% - 150px);
+    right: calc(50% - 150px);
+    width: 30px;
+    display: block;
+    cursor: pointer;
+    opacity: .7;
+    margin: auto 0;
+
+}
+
+#close:hover {
+    opacity: 1;
+}
+
+#zoom-img {
+    display: block;
+    width: 600px;
+    margin: auto 0;
+}
+
+#zoom-img .photo {
+    width: 500px;
+    margin: auto 0;
+}
+
+#popup-back {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 0px;
+    background-color: rgba(255, 255, 255, 0.9);
+    top: 0px;
+    left: 0px;
+    z-index: -1; 
+}

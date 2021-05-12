@@ -39,7 +39,7 @@ function renderBasket() {
         </div>`;
         $basket.insertAdjacentHTML('beforeend', html);
         });
-        h.textContent = `в корзине ${getQuantity(basket)} товаров, на сумму  ${getPrice(basket)} рублей`;
+        h.textContent = `в корзине ${getQuantity(basket)} товаров, на сумму  ${getPrice(basket).toLocaleString()} рублей`;
     } else {
         h.textContent = 'корзина пуста'
     }

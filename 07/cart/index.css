@@ -7,7 +7,15 @@ body {
 .container {
     width: 100%;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+  }
 
 .product {
     display: inline-block;
@@ -19,8 +27,8 @@ body {
 
 .product img {
     background: #fff;
-    width: 100px;
-    height: auto;
+    /*width: 100px;*/
+    height: 150px;
     /*margin: 20px;*/
     padding: 3px;
 }
@@ -35,13 +43,32 @@ body {
     font-weight: bold;
 }
 
-.product .price {
+.price {
     margin: 0px;
     padding: 10px;
     margin-top: 0px;
     color: #415fff;
     font-size: 24px;
     font-weight: bold;
+}
+
+#products-list {
+    text-align: center;
+}
+
+#cart {
+    display: flex;
+    cursor: pointer;
+}
+
+#cart img {
+    width: 50px;
+    padding: 10px;
+    opacity: .5;
+}
+
+#cart img:hover {
+    opacity: 1;
 }
 
 .buy {
@@ -108,6 +135,7 @@ body {
 }
 
 #product-img {
+    position: relative;
     width: 300px;
     /*display: inline-block;*/
     margin: auto 0;
@@ -123,6 +151,51 @@ body {
     top: 0px;
     left: 0px;
     z-index: -1; 
+}
+
+#popupCart {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+    display: none;
+    justify-content: center;
+}
+
+#popupCartContent {
+    position: relative;
+    margin: auto 0;
+    width: 600px;
+    height: 400px;
+    background-color: #fff;
+    border: 1px dotted gray;
+}
+
+#purchases, #delivery, #comment {
+    display: none;
+    margin: 10px;
+    width: 580px;
+    height: 300px;
+    border: 1px dotted gray;
+}
+
+#close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 30px;
+    display: block;
+    cursor: pointer;
+    opacity: .7;
+    margin: auto 0;
+
+}
+
+#close:hover {
+    opacity: 1;
 }
 
 /* -- elements -------------------------------------------- */
@@ -165,5 +238,71 @@ h4 {
     color: rgb(0, 0, 0);
     font-size: 18px;
     font-weight: bold;
+}
+
+form {
+    margin-bottom: 30px;
+}
+
+label {
+    width: 80px;
+    display: inline-block;
+    /*float:left;*/
+    padding: 10px;
+    /*margin: 10px;*/
+}
+
+input,
+textarea {
+    width: 400px;
+    display: inline-block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: 10px;
+    /*margin: 10px;*/
+    border: 1px solid #888;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[name="name"],
+textarea[name="message"] {
+    text-transform: capitalize;
+}
+
+input[name="email"]:focus {
+    color: white;
+    background: #333;
+}
+
+textarea {
+    width: 500px;
+}
+
+input[type="submit"],
+input[type="reset"] {
+    width: 150px;
+    font-size: 16px;
+    /*font-weight: 400;*/
+    text-align: center;
+    background: #888;
+    color: white;
+    border: 0 none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0px;
+    margin-right: 10px;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+input[type="reset"]:hover,
+input[type="reset"]:focus {
+    background-color: #415fff;
+    /*box-shadow: 0 0 0 -2px white, 0 0 0 2px black;*/
 }
 

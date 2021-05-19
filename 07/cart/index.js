@@ -3,7 +3,7 @@ const $productsList = document.querySelector('#products-list');
 const $popup = document.querySelector('#popup');
 
 const $popupCart = document.querySelector('#popupCart');
-const cartSteps = ['#purchases', '#delivery', '#comment']
+const cartSteps = ['#purchases', '#delivery', '#comment', '#thanks']
 
 const cart = [];
 const products = [];
@@ -36,7 +36,7 @@ function renderCart() {
         const html = `<img class="cart-full" src="img/shopping-cart-full.svg"><p class="price" style="line-height: 50px;">${getPrice(cart).toLocaleString()} &#8381;</p>`;
         $cart.insertAdjacentHTML('beforeend', html);
     } else {
-        const html = `<img class="cart-empty" src="img/shopping-cart-empty.svg">`;
+        const html = `<img class="cart-empty" src="img/shopping-cart-empty.svg"><p class="noprice" style="line-height: 50px;">Корзина пуста</p>`;
         $cart.insertAdjacentHTML('beforeend', html);
     }
 }
@@ -115,9 +115,12 @@ document.addEventListener('keydown', function(e) {
 function ClosePopup() {
     $popup.style.display = 'none';
     $popupCart.style.display = 'none';
+    renderCart();
 };
 
-$cart.addEventListener('click', function(e) { renderPopupCart(); });
+$cart.addEventListener('click', function(e) { 
+    if(cart.length !== 0) renderPopupCart(); 
+});
 
 $popupCart.addEventListener('click', function(e) {
     if(e.target.id === 'close') ClosePopup();
@@ -127,39 +130,55 @@ $popupCart.addEventListener('click', function(e) {
         if(++step >= cartSteps.length) step = 0;
         $popupCart.querySelector(cartSteps[step]).style.display = 'block';
         e.target.setAttribute('data-step', step);
+        if(step == 1) e.target.textContent = "Далее";
+        if(step == 2) e.target.textContent = "Завершить покупку";
+        if(step == 3) {
+            e.target.style.display = 'none';
+            cart.splice(0, cart.length);
+        }
+    }
+    if(e.target.id === 'minus') {
+        const uId = e.target.getAttribute('data-uid');
+        cart[uId].quantity--;
+        if(!cart[uId].quantity) cart.splice(uId, 1);
+        renderPopupCart();
+    }
+    if(e.target.id === 'plus') {
+        const uId = e.target.getAttribute('data-uid');
+        cart[uId].quantity++;
+        renderPopupCart();
     }
 });
 
 function renderPopupCart() {
     $popupCart.textContent = '';
     $popupCart.style.display = 'flex';
-    let html='<div id="popupCartContent"><div id="purchases">';
-    cart.forEach(function(cart, i){
-        html += `
-        <div>            
-            <h4>${cart.name} / Количество ${cart.quantity} / Цена ${cart.price.toLocaleString()} &#8381;</h4>
-            <!-- <button data-id="${i}" class="remove">-</button> -->
+    let html='<div id="popupCartContent"><div id="purchases"><h4>Купленные товары</h4><table class="table"><tr><th>Наименование</th><th>Количество</th><th>Цена</th></tr>';
+    cart.forEach(function(cart, i) {
+        html += `<div>            
+            <tr>
+                <td>${cart.name}</td>
+                <td><button data-uid="${i}" id="minus">-</button>&nbsp;${cart.quantity}&nbsp;<button data-uid="${i}" id="plus">+</button></td>
+                <td>${cart.price.toLocaleString()} &#8381;<!-- / ${(cart.price * cart.quantity).toLocaleString()} &#8381;--></td>
+            </tr>
         </div>`;
     });
-    html += `
-    </div>
+    html += `<tr><td colspan="2">Итого</td><td>${getPrice(cart).toLocaleString()} &#8381;</td></tr>
+    </table></div>
     <div id="delivery">
         <h4>Укажите детали доставки</h4>
-        <form action="">
-            <p><label for="name">Ваше имя </label><input type="text" name="name" placeholder="Ваше имя"></p>
-            <p><label for="addreds">Улица, дом, квартира </label><input type="text" name="address" placeholder="Адрес"></p>
-            <p><input type="submit" value="Отправить"> <input type="reset" value="Отмена"></p>
-        </form>
+        <p><label for="name">Ваше имя </label><input type="text" name="name" placeholder="Ваше имя"></p>
+        <p><label for="name">Телефон </label><input type="text" name="phone" placeholder="+7 (___) ___ ____"></p>
+        <p><label for="addreds">Улица, дом, квартира </label><input type="text" name="address" placeholder="Адрес"></p>
     </div>`;
-    html += `
-    <div id="comment">
+    html += `<div id="comment">
         <h4>Добавте комментарий</h4>
-        <form action="">
-            <textarea placeholder=""></textarea>
-            <p><input type="submit" value="Отправить"> <input type="reset" value="Отмена"></p>
-        </form>
+        <p><textarea placeholder=""></textarea></p>
+    </div>`;
+    html += `<div id="thanks">
+        <p style="margin: auto;">Спасибо за покупку!</p>
     </div>
-    <button id="cartNext" data-step="0" class="buy">Далее</button>`;
+    <button id="cartNext" data-step="0" class="buy">Офрмить покупку</button>`;
     html += '<div id="close"><img id="close" width="30px" src="img/close.svg"></div></div><div id="popup-back" onClick="ClosePopup();"></div>';
 
     $popupCart.insertAdjacentHTML('beforeend', html);
